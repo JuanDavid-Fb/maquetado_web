@@ -1,0 +1,34 @@
+.box {
+    width: 200px;
+    height: 200px;
+    margin: 20px;
+
+    /* Colores básicos */
+    background-color: #ff0000; /* Rojo */
+    background-color: #00ff00; /* Verde */
+    background-color: #0000ff; /* Azul */
+
+    /* Mezclar colores */
+    background-color: #ffff00; /* Amarillo */
+    background-color: #00ffff; /* Cyan */
+    background-color: #ff00ff; /* Magenta */
+
+    /* Grises */
+    background-color: #808080; /* Gris */
+    background-color: #aaaaaa; /* Gris claro */
+    background-color: #cccccc; /* Gris más claro */
+
+    /* Negro y blanco */
+    background-color: #000000; /* Negro */
+    background-color: #ffffff; /* Blanco */
+
+    /* Formato hexadecimal corto */
+    background-color: #f00; /* Rojo */
+    background-color: #0f0; /* Verde */
+    background-color: #00f; /* Azul */
+
+    /* Formato HSL */
+    background-color: hsl(0, 100%, 50%);   /* Rojo */
+    background-color: hsl(120, 100%, 50%); /* Verde */
+    background-color: hsl(240, 100%, 50%); /* Azul */
+}
