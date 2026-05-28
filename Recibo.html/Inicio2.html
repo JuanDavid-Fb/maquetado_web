@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recibo – Green & Blue Aguamarine</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #d0d0d0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 16px;
+      font-family: Arial, Helvetica, sans-serif;
+      min-height: 100vh;
+    }
+
+    .recibo {
+      background: #d6f0f0;
+      border: 1.5px solid #4ab8c4;
+      border-radius: 3px;
+      width: 660px;
+      padding: 14px 18px 20px 18px;
+      box-shadow: 3px 3px 10px rgba(0,0,0,0.18);
+    }
+
+    /* ── HEADER ── */
+    .header {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: start;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .logo-line1 {
+      font-size: 26px;
+      font-weight: 900;
+      font-family: 'Arial Black', Arial, sans-serif;
+      line-height: 1;
+    }
+    .logo-green  { color: #3aaa35; }
+    .logo-blue   { color: #1565c0; }
+    .logo-line2  { font-size: 12px; font-weight: 700; color: #1565c0; letter-spacing: 3px; }
+    .tagline     { font-size: 8.5px; color: #555; font-style: italic; margin-top: 2px; }
+
+    .center-block { text-align: center; }
+    .services {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      font-size: 9.5px;
+      font-weight: 700;
+      color: #1565c0;          /* AZUL */
+      margin-bottom: 4px;
+    }
+    .services label { display: flex; align-items: center; gap: 3px; cursor: pointer; white-space: nowrap; }
+    .services input[type="checkbox"] { width: 11px; height: 11px; accent-color: #1565c0; cursor: pointer; }
+    .phone { font-size: 10.5px; color: #1565c0; font-weight: bold; } /* AZUL */
+
+    .recibo-box {
+      border: 2px solid #1565c0;
+      border-radius: 3px;
+      text-align: center;
+      padding: 3px 12px 4px;
+      min-width: 105px;
+    }
+    .recibo-label    { font-size: 10px; font-weight: 700; color: #1565c0; letter-spacing: 1px; } /* AZUL */
+    .recibo-num-row  { display: flex; align-items: baseline; justify-content: center; gap: 4px; margin-top: 1px; }
+    .nro             { font-size: 9.5px; color: #e53935; font-weight: bold; }  /* ROJO */
+    .num             { font-size: 22px; font-weight: 700; color: #e53935; letter-spacing: 2px; } /* ROJO */
+
+    /* ── LABELS DE CAMPO (negro) ── */
+    .lbl {
+      font-size: 10px;
+      font-weight: 700;
+      color: #111;             /* NEGRO */
+      white-space: nowrap;
+    }
+
+    input.f {
+      border: none;
+      border-bottom: 1px solid #555;
+      background: transparent;
+      font-size: 11px;
+      color: #222;
+      outline: none;
+      min-width: 0;
+    }
+
+    /* ── DATE + DIRECCIÓN ── */
+    .row-dates {
+      display: grid;
+      grid-template-columns: auto auto 1fr;
+      align-items: end;
+      gap: 12px;
+      margin-bottom: 7px;
+    }
+    .date-group { display: flex; align-items: flex-end; gap: 2px; }
+    .date-group input.f  { width: 26px; text-align: center; }
+    .date-group input.fy { width: 38px; text-align: center; }
+    .slash { font-size: 11px; color: #555; line-height: 2; }
+    .dir-group { display: flex; align-items: flex-end; gap: 4px; }
+    .dir-group input.f { width: 100%; }
+
+    /* ── SEÑOR ── */
+    .row-senor { display: flex; align-items: flex-end; gap: 5px; margin-bottom: 7px; }
+    .row-senor input.f { flex: 1; }
+
+    /* ── CIUDAD / EDAD / PESO / TALLA / PPL ── */
+    .row-datos {
+      display: grid;
+      grid-template-columns: auto 100px auto 46px auto 46px auto 46px auto 46px;
+      align-items: end;
+      gap: 4px;
+      margin-bottom: 7px;
+    }
+    .row-datos input.f { width: 100%; }
+
+    /* ── TELÉFONO ── */
+    .row-tel { display: flex; align-items: flex-end; gap: 5px; margin-bottom: 10px; }
+    .row-tel input.f { width: 180px; }
+
+    /* ── TABLA ── */
+    table { width: 100%; border-collapse: collapse; font-size: 11px; }
+
+    th {
+      border: 1.5px solid #4ab8c4;
+      padding: 5px 7px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #3aaa35;          /* VERDE */
+      text-align: left;
+    }
+    th.r { text-align: right; width: 88px; white-space: nowrap; }
+
+    td { border: 1.5px solid #4ab8c4; padding: 0; }
+    td input.f { width: 100%; padding: 5px 7px; font-size: 11px; border: none; }
+    td input.fr { text-align: right; }
+    tr.desc td { height: 30px; }
+
+    td.obs-hdr {
+      padding: 5px 7px;
+      font-weight: 700;
+      font-size: 11px;
+      color: #3aaa35;          /* VERDE */
+    }
+    td.obs-body textarea {
+      width: 100%;
+      height: 58px;
+      border: none;
+      background: transparent;
+      resize: none;
+      font-size: 11px;
+      color: #222;
+      padding: 5px 7px;
+      outline: none;
+      font-family: Arial, sans-serif;
+    }
+    td.total-lbl {
+      text-align: right;
+      padding: 5px 7px;
+      font-weight: 700;
+      font-size: 12px;
+      color: #3aaa35;          /* VERDE */
+    }
+    td.total-val { width: 88px; }
+    td.total-val input.f { padding: 5px 7px; font-weight: 700; font-size: 12px; }
+
+    /* ── FIRMAS ── */
+    .sigs { display: flex; justify-content: space-around; margin-top: 24px; }
+    .sig { text-align: center; width: 190px; }
+    .sig-line { border-top: 1.5px solid #333; margin-bottom: 4px; }
+    .sig-lbl {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: #3aaa35;          /* VERDE */
+      letter-spacing: 0.5px;
+    }
+
+    @media print {
+      body { background: white; padding: 0; }
+      .recibo { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="recibo">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <div class="logo-line1">
+        <span class="logo-green">GREEN</span><span class="logo-green">&</span><span class="logo-blue">BLUE</span>
+      </div>
+      <div class="logo-line2">a g u a m a r i n e</div>
+      <div class="tagline">Efecto y prevención en la funcionalidad física</div>
+    </div>
+
+    <div class="center-block">
+      <div class="services">
+        <label><input type="checkbox" name="s" value="r"> REHABILITACIÓN</label>
+        <label><input type="checkbox" name="s" value="e"> ENTRETENIMIENTO</label>
+        <label><input type="checkbox" name="s" value="m"> MASAJES</label>
+        <label><input type="checkbox" name="s" value="n"> NATACIÓN</label>
+      </div>
+      <div class="phone">📱 318 868 8008 / 310 740 6038</div>
+    </div>
+
+    <div class="recibo-box">
+      <div class="recibo-label">RECIBO</div>
+      <div class="recibo-num-row">
+        <span class="nro">N<sup>o</sup></span>
+        <span class="num">0455</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FECHAS + DIRECCIÓN -->
+  <div class="row-dates">
+    <div class="date-group">
+      <span class="lbl">Fecha<br>Inicio</span>&nbsp;
+      <input class="f" type="text" maxlength="2" placeholder="DD">
+      <span class="slash">/</span>
+      <input class="f" type="text" maxlength="2" placeholder="MM">
+      <span class="slash">/</span>
+      <input class="f fy" type="text" maxlength="4" placeholder="AAAA">
+    </div>
+    <div class="date-group">
+      <span class="lbl">Fecha<br>Finalización</span>&nbsp;
+      <input class="f" type="text" maxlength="2" placeholder="DD">
+      <span class="slash">/</span>
+      <input class="f" type="text" maxlength="2" placeholder="MM">
+      <span class="slash">/</span>
+      <input class="f fy" type="text" maxlength="4" placeholder="AAAA">
+    </div>
+    <div class="dir-group">
+      <span class="lbl">Dirección:</span>
+      <input class="f" type="text" style="width:100%;">
+    </div>
+  </div>
+
+  <!-- SEÑOR(ES) -->
+  <div class="row-senor">
+    <span class="lbl">Señor (es):</span>
+    <input class="f" type="text">
+  </div>
+
+  <!-- CIUDAD / EDAD / PESO / TALLA / PPL -->
+  <div class="row-datos">
+    <span class="lbl">Ciudad:</span>
+    <input class="f" type="text">
+    <span class="lbl">Edad:</span>
+    <input class="f" type="text">
+    <span class="lbl">Peso:</span>
+    <input class="f" type="text">
+    <span class="lbl">Talla:</span>
+    <input class="f" type="text">
+    <span class="lbl">PPL:</span>
+    <input class="f" type="text">
+  </div>
+
+  <!-- TELÉFONO -->
+  <div class="row-tel">
+    <span class="lbl">Teléfono:</span>
+    <input class="f" type="text">
+  </div>
+
+  <!-- TABLA DESCRIPCIÓN -->
+  <table>
+    <thead>
+      <tr>
+        <th>DESCRIPCIÓN</th>
+        <th class="r">VR. TOTAL</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="desc"><td><input class="f" type="text"></td><td><input class="f fr" type="text" placeholder="$"></td></tr>
+      <tr class="desc"><td><input class="f" type="text"></td><td><input class="f fr" type="text" placeholder="$"></td></tr>
+      <tr class="desc"><td><input class="f" type="text"></td><td><input class="f fr" type="text" placeholder="$"></td></tr>
+      <tr class="desc"><td><input class="f" type="text"></td><td><input class="f fr" type="text" placeholder="$"></td></tr>
+      <tr class="desc"><td><input class="f" type="text"></td><td><input class="f fr" type="text" placeholder="$"></td></tr>
+      <tr class="desc"><td><input class="f" type="text"></td><td><input class="f fr" type="text" placeholder="$"></td></tr>
+      <tr>
+        <td class="obs-hdr" colspan="2">OBSERVACIONES</td>
+      </tr>
+      <tr>
+        <td class="obs-body" colspan="2"><textarea></textarea></td>
+      </tr>
+      <tr>
+        <td class="total-lbl">TOTAL</td>
+        <td class="total-val"><input class="f fr" type="text" placeholder="$"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- FIRMAS -->
+  <div class="sigs">
+    <div class="sig">
+      <div class="sig-line"></div>
+      <div class="sig-lbl">FIRMA DEL INSTRUCTOR</div>
+    </div>
+    <div class="sig">
+      <div class="sig-line"></div>
+      <div class="sig-lbl">FIRMA DEL USUARIO</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
